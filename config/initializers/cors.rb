@@ -16,11 +16,18 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
       headers: :any,
       methods: [:get, :post, :put, :patch, :delete, :options, :head]
   end
-  # You might add another 'allow' block for production later, like:
-  # allow do
-  #   origins 'https://your-production-frontend.com' # Your actual production domain
-  #   resource '*',
-  #     headers: :any,
-  #     methods: [:get, :post, :put, :patch, :delete, :options, :head]
-  # end
+  
+  # New block for Heroku production frontend
+  allow do
+    # Replace 'your-heroku-frontend-app-name' with the actual name
+    # you will choose for your Vue.js Heroku app (e.g., 'my-recipe-frontend-123.herokuapp.com')
+    # You'll come back and update this after you deploy the frontend
+    origins 'https://*.herokuapp.com' # Wildcard for Heroku subdomains
+    # OR, once you know your frontend app name:
+    # origins 'https://your-frontend-app-name.herokuapp.com'
+
+    resource '*',
+      headers: :any,
+      methods: [:get, :post, :put, :patch, :delete, :options, :head]
+  end
 end
