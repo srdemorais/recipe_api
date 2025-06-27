@@ -1,0 +1,32 @@
+chicken_rice_stir_fry:
+  title: "Chicken and Rice Stir Fry"
+  cook_time: "20 min"
+  prep_time: "15 min"
+  ingredients: ["chicken breast", "white rice", "soy sauce", "broccoli", "onion", "garlic"]
+  ratings: 4.5
+  cuisine: "Asian"
+  category: "Dinner"
+  author: "Test Cook"
+  image: "http://example.com/stir_fry.jpg"
+
+simple_tomato_soup:
+  title: "Simple Tomato Soup"
+  cook_time: "30 min"
+  prep_time: "5 min"
+  ingredients: ["canned tomatoes", "vegetable broth", "basil", "garlic", "onion"]
+  ratings: 4.0
+  cuisine: "Italian"
+  category: "Soup"
+  author: "Soup Master"
+  image: "http://example.com/tomato_soup.jpg"
+
+beef_stew:
+  title: "Hearty Beef Stew"
+  cook_time: "2 hr"
+  prep_time: "30 min"
+  ingredients: ["beef chunks", "potatoes", "carrots", "celery", "beef broth", "thyme"]
+  ratings: 4.8
+  cuisine: "Comfort Food"
+  category: "Main Dish"
+  author: "Grandma"
+  image: "http://example.com/beef_stew.jpg"
