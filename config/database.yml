@@ -79,20 +79,19 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  primary: &primary_production
-    <<: *default
-    database: recipe_api_production
-    username: recipe_api
-    password: <%= ENV["RECIPE_API_DATABASE_PASSWORD"] %>
-  cache:
-    <<: *primary_production
-    database: recipe_api_production_cache
-    migrations_paths: db/cache_migrate
-  queue:
-    <<: *primary_production
-    database: recipe_api_production_queue
-    migrations_paths: db/queue_migrate
-  cable:
-    <<: *primary_production
-    database: recipe_api_production_cable
-    migrations_paths: db/cable_migrate
+  # Heroku provides a DATABASE_URL environment variable
+  # This single URL contains all connection details (host, port, user, password, database name)
+  url: <%= ENV['DATABASE_URL'] %>
+
+  # You can keep these if you still want to manage separate pools and timeouts,
+  # but they are often unnecessary for simpler Heroku setups.
+  # For a basic app, Heroku's defaults are usually fine.
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+
+  # IMPORTANT: Remove the 'cache', 'queue', 'cable' sub-configurations.
+  # Heroku's default setup does not support this multi-database configuration
+  # out-of-the-box for a single Heroku Postgres add-on.
+  # If you truly need separate databases for these, you'd need multiple
+  # Heroku Postgres add-ons and more complex setup/environment variable management.
+  # For this prototype, it's best to consolidate to one database.
