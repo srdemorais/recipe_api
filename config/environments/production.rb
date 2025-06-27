@@ -48,24 +48,12 @@ Rails.application.configure do
   # Explicitly configure Solid Cache to use the primary database connection
   # config.solid_cache.connects_to = { database: { writing: :primary, reading: :primary } }
 
-
   # Replace the default in-process and non-durable queuing backend for Active Job.
   config.active_job.queue_adapter = :solid_queue
   # config.solid_queue.connects_to = { database: { writing: :queue } }
   # Explicitly configure Solid Queue to use the primary database connection
   # config.solid_queue.connects_to = { database: { writing: :primary, reading: :primary } }
-  
-  # Explicitly configure database resolution for Rails 8's new "solid" gems
-  config.active_record.database_selector = { delay: 2.seconds } # Keep this if desired, it's generally harmless
-  config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver.new(
-    # The resolver's configuration goes inside the .new() call
-    config: {
-      production: {
-        queue: :primary, # For Solid Queue
-        cache: :primary  # For Solid Cache
-      }
-    }
-  )
+
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
@@ -101,4 +89,12 @@ Rails.application.configure do
   #
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+  
+  # Explicitly tell Solid Cache to use the primary database connection
+  config.solid_cache.connects_to = { database: { writing: :primary, reading: :primary } }
+
+  # Explicitly tell Solid Queue to use the primary database connection
+  config.solid_queue.connects_to = { database: { writing: :primary, reading: :primary } }
+
+
 end
