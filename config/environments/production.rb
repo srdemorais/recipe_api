@@ -54,6 +54,18 @@ Rails.application.configure do
   # config.solid_queue.connects_to = { database: { writing: :queue } }
   # Explicitly configure Solid Queue to use the primary database connection
   # config.solid_queue.connects_to = { database: { writing: :primary, reading: :primary } }
+  
+  # Explicitly configure database resolution for Rails 8's new "solid" gems
+  config.active_record.database_selector = { delay: 2.seconds } # Optional, adjust as needed
+  config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
+  config.active_record.database_resolver_for_environment = {
+    # Tell Rails that 'queue' and 'cache' should use the 'primary' database connection
+    # This resolves the ActiveRecord::AdapterNotSpecified errors
+    production: {
+      queue: :primary, # For Solid Queue
+      cache: :primary  # For Solid Cache
+    }
+  }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
