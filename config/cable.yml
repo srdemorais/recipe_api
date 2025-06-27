@@ -9,9 +9,12 @@ test:
   adapter: test
 
 production:
-  adapter: solid_cable
-  connects_to:
-    database:
-      writing: cable
-  polling_interval: 0.1.seconds
-  message_retention: 1.day
+  adapter: solid_cable # Or solid_cable if that's your gem
+  # For production on Heroku, use the same database as the main application.
+  # This tells Action Cable to use the 'production' database configuration from database.yml
+  # which now correctly uses DATABASE_URL.
+  url: <%= ENV['DATABASE_URL'] %>
+  # If you're using solid_cable, the adapter name might be `solid_cable`
+  # In that case, ensure the solid_cable gem is present in your Gemfile.
+  # The `url` should still be DATABASE_URL for a single db Heroku setup.
+  # channel_prefix: recipe_api_production # You can keep this or remove it if not needed
